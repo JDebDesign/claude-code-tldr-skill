@@ -2,6 +2,10 @@
 
 Claude Code's plans can be long, technical, and hard to scan. `/tldr` turns any plan into a short bullet list that a beginner developer can read in under a minute.
 
+<p align="center">
+  <img src="assets/tldr-before-after.png" alt="A long Claude Code plan on top, and the short plain-English /tldr version below it" width="560">
+</p>
+
 ## What you get
 
 After Claude Code writes a plan, type `/tldr` and you get:
