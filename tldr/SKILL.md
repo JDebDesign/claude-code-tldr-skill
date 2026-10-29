@@ -1,18 +1,36 @@
 ---
 name: tldr
-description: Boil a Claude Code plan down to a short, beginner-friendly bullet list. Use when the user types /tldr, or asks for a TL;DR, summary, or plain-English version of a plan Claude just made (in plan mode or otherwise).
-argument-hint: "[optional: path to a plan file, or a focus like 'risks only']"
+description: Boil a Claude Code plan down to a short, beginner-friendly bullet list. Use when the user types /tldr, or asks for a TL;DR, summary, or plain-English version of a plan Claude just made (in plan mode or otherwise). Anything typed after /tldr is treated as a hint for how to write it.
+argument-hint: "[optional hint: anything to keep in mind, e.g. 'focus on risks', 'explain like I am new to React', or a path to a plan file]"
 ---
 
 # /tldr
 
 Turn a plan into a short bullet version that a beginner developer can read in under a minute.
 
+## The user's hint
+
+Whatever the user typed after `/tldr` is a hint for this run:
+
+> $ARGUMENTS
+
+If the hint above is empty, ignore this section and use the defaults.
+
+Treat the hint as guidance on how to write the TL;DR, not as part of the plan. Examples of what it might ask for:
+
+- A focus: "just the risks", "only the steps", "files that change".
+- An audience or tone: "explain it like I'm new to React", "for a non-technical manager".
+- A specific concern: "will this touch the database?", "anything that could break login?". Make sure the TL;DR answers it using only what the plan says. If the plan does not say, state that plainly.
+- Length or language: "3 bullets total", "in Spanish".
+- A path to a plan file: use that file as the plan (see step 1).
+
+Apply the hint by changing emphasis, depth, wording, and which sections you include. A hint never overrides the Rules below: stay read-only, stay faithful to the plan, and never use em dashes. If a hint asks for something the rules forbid (for example "add a step for tests"), do the rest of the TL;DR and say in one line why you left that part out.
+
 ## 1. Find the plan
 
 Use the first of these that applies:
 
-1. A file path in the arguments: read that file.
+1. A path to an existing file in the hint: read that file.
 2. The most recent plan in this conversation (a plan-mode proposal, a "Plan:" section, or a numbered implementation outline).
 3. The newest file in `~/.claude/plans/` (check with `ls -t ~/.claude/plans | head -1`), but only if the conversation has no plan. Say which file you used.
 
@@ -20,7 +38,7 @@ If none exist, say so in one line and stop. Do not invent a plan.
 
 ## 2. Write the TL;DR
 
-Output exactly this structure, nothing before or after it except an optional one-line question at the end (see rules):
+Unless the hint says otherwise, output exactly this structure, nothing before or after it except an optional one-line question at the end (see rules):
 
 **Goal**
 - One bullet: what we are trying to achieve, in plain words.
@@ -43,5 +61,5 @@ Output exactly this structure, nothing before or after it except an optional one
 - Faithful: only summarize what the plan says. Do not add steps, change scope, or editorialize. If the plan is ambiguous, say so under "Watch out for".
 - Never use em dashes. Use commas, colons, or parentheses instead.
 - Read-only: do not edit files, run the plan, or exit plan mode. This skill only explains.
-- If the arguments ask for a focus (e.g. "risks only", "just the steps"), return only that section.
+- If the hint asks for a single focus (e.g. "risks only", "just the steps"), return only that section.
 - If the plan has an open question the user must answer before work can start, end with one line: "Question: ..."

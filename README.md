@@ -65,7 +65,15 @@ Options:
 
 - `/tldr` summarizes the most recent plan in the conversation.
 - `/tldr path/to/plan.md` summarizes a specific plan file.
+
+Anything you type after `/tldr` is treated as a hint, so you can steer the summary:
+
 - `/tldr risks only` or `/tldr just the steps` returns only that section.
+- `/tldr explain it like I'm new to React` adjusts the wording for your level.
+- `/tldr will this touch the database?` makes sure that question is answered.
+- `/tldr in 3 bullets` or `/tldr in Spanish` changes the length or language.
+
+Hints change emphasis and wording only. The skill still sticks to what the plan says and never edits anything.
 
 If the conversation has no plan, it falls back to the newest file in `~/.claude/plans/` and tells you which file it used.
 
